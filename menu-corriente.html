@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comida Corriente - My Delights</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Cabecera del sitio -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="My Delights Logo" height="50">
+                    My Delights
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="menu-carta.html">Menú a la Carta</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="menu-corriente.html">Comida Corriente</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="eventos.html">Eventos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="registro.html">Registro/Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="perfil.html">Mi Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="carrito.html">
+                                <i class="fas fa-shopping-cart"></i> 
+                                <span id="cart-count" class="badge bg-danger">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5 pt-5">
+        <h2 class="text-center mb-5">Comida Corriente</h2>
+        
+        <!-- Sección de sopas -->
+        <section class="categoria-menu">
+            <h3>Sopas</h3>
+            <div class="platos-container">
+                <!-- Sopa 1 -->
+                <div class="plato">
+                    <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.12.png" alt="Sopa de Tomate">
+                    <h4>Sopa de Tomate</h4>
+                    <p>Ingredientes: Tomates, cebolla, ajo, albahaca, crema</p>
+                    <p class="precio">$8.000</p>
+                    <button class="btn-agregar" data-id="10" data-name="Sopa de Tomate" data-price="8000">Agregar al carrito</button>
+                </div>
+                
+                <!-- Sopa 2 -->
+                <div class="plato">
+                    <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.49.png" alt="Sopa de Pollo">
+                    <h4>Sopa de Pollo</h4>
+                    <p>Ingredientes: Pollo, zanahoria, apio, cebolla, fideos</p>
+                    <p class="precio">$9.000</p>
+                    <button class="btn-agregar" data-id="11" data-name="Sopa de Pollo" data-price="9000">Agregar al carrito</button>
+                </div>
+                
+                <!-- Sopa 3 -->
+                <div class="plato">
+                    <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/shutterstock_521741356.jpg" alt="Crema de Champiñones">
+                    <h4>Crema de Champiñones</h4>
+                    <p>Ingredientes: Champiñones, cebolla, ajo, crema, caldo de verduras</p>
+                    <p class="precio">$10.000</p>
+                    <button class="btn-agregar" data-id="12" data-name="Crema de Champiñones" data-price="10000">Agregar al carrito</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de principios -->
+        <section class="categoria-menu">
+            <h3>Principios</h3>
+            <div class="platos-container">
+                <!-- Principio 1 -->
+                <div class="plato">
+                    <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.29.png" alt="Arroz con Verduras">
+                    <h4>Arroz con Verduras</h4>
+                    <p>Ingredientes: Arroz, zanahoria, arvejas, maíz, pimentón</p>
+                    <p class="precio">$5.000</p>
+                    <button class="btn-agregar" data-id="13" data-name="Arroz con Verduras" data-price="5000">Agregar al carrito</button>
+                </div>
+                
+                <!-- Principio 2 -->
+                <div class="plato">
+                    <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.12.png" alt="Puré de Papas">
+                    <h4>Puré de Papas</h4>
+                    <p>Ingredientes: Papas, leche, mantequilla, sal, pimienta</p>
+                    <p class="precio">$6.000</p>
+                    <button class="btn-agregar" data-id="14" data-name="Puré de Papas" data-price="6000">Agregar al carrito</button>
+                </div>
+                
+                <!-- Principio 3 -->
+                <div class="plato">
+                    <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.49.png" alt="Ensalada Mixta">
+                    <h4>Ensalada Mixta</h4>
+                    <p>Ingredientes: Lechuga, tomate, pepino, cebolla, vinagreta</p>
+                    <p class="precio">$7.000</p>
+                    <button class="btn-agregar" data-id="15" data-name="Ensalada Mixta" data-price="7000">Agregar al carrito</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de carnes -->
+        <section class="categoria-menu">
+            <h3>Carnes</h3>
+            <div class="platos-container">
+                <!-- Carne 1 -->
+                <div class="plato">
+                    <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/shutterstock_521741356.jpg" alt="Pollo a la Plancha">
+                    <h4>Pollo a la Plancha</h4>
+                    <p>Ingredientes: Pechuga de pollo, limón, hierbas, sal, pimienta</p>
+                    <p class="precio">$12.000</p>
+                    <button class="btn-agregar" data-id="16" data-name="Pollo a la Plancha" data-price="12000">Agregar al carrito</button>
+                </div>
+                
+                <!-- Carne 2 -->
+                <div class="plato">
+                    <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.29.png" alt="Carne Asada">
+                    <h4>Carne Asada</h4>
+                    <p>Ingredientes: Lomo de res, sal, pimienta, chimichurri</p>
+                    <p class="precio">$15.000</p>
+                    <button class="btn-agregar" data-id="17" data-name="Carne Asada" data-price="15000">Agregar al carrito</button>
+                </div>
+                
+                <!-- Carne 3 -->
+                <div class="plato">
+                    <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.12.png" alt="Pescado al Ajillo">
+                    <h4>Pescado al Ajillo</h4>
+                    <p>Ingredientes: Filete de pescado, ajo, perejil, limón, vino blanco</p>
+                    <p class="precio">$14.000</p>
+                    <button class="btn-agregar" data-id="18" data-name="Pescado al Ajillo" data-price="14000">Agregar al carrito</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>My Delights</h5>
+                    <p>Ofreciendo la mejor experiencia gastronómica desde 2010.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Contacto</h5>
+                    <address>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Calle Principal #123, Ciudad</p>
+                        <p><i class="fas fa-phone me-2"></i> (123) 456-7890</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@mydelights.com</p>
+                    </address>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Síguenos</h5>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2023 My Delights. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html> 

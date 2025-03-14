@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - My Delights</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Cabecera del sitio -->
+    <header>
+        <div class="logo">
+            <h1>My Delights</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="menu-carta.html">Menú a la Carta</a></li>
+                <li><a href="menu-corriente.html">Comida Corriente</a></li>
+                <li><a href="eventos.html">Eventos</a></li>
+                <li><a href="registro.html">Registro/Login</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Carrito de Compras</h2>
+        
+        <!-- Productos en el carrito -->
+        <section class="productos-carrito">
+            <table class="tabla-carrito">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio Unitario</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="carrito-items">
+                    <!-- Ejemplo de un producto en el carrito -->
+                    <tr>
+                        <td>Plato Especial</td>
+                        <td>$25.000</td>
+                        <td>
+                            <button class="btn-cantidad">-</button>
+                            <span>2</span>
+                            <button class="btn-cantidad">+</button>
+                        </td>
+                        <td>$50.000</td>
+                        <td><button class="btn-eliminar">Eliminar</button></td>
+                    </tr>
+                    <!-- Puedes agregar más productos aquí -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Resumen de la compra -->
+        <section class="resumen-compra">
+            <h3>Resumen de la Compra</h3>
+            <div class="resumen-detalles">
+                <p><strong>Subtotal:</strong> <span id="subtotal">$50.000</span></p>
+                <p><strong>Descuento:</strong> <span id="descuento">$0</span></p>
+                <p><strong>Recargo por domicilio (2%):</strong> <span id="recargo">$0</span></p>
+                <p class="total"><strong>Total:</strong> <span id="total">$50.000</span></p>
+            </div>
+
+            <!-- Opciones de entrega -->
+            <div class="opciones-entrega">
+                <h4>Opciones de Entrega</h4>
+                <div class="form-group">
+                    <input type="radio" id="recoger" name="entrega" value="recoger" checked>
+                    <label for="recoger">Recoger en el restaurante</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" id="domicilio" name="entrega" value="domicilio">
+                    <label for="domicilio">Entrega a domicilio (+2%)</label>
+                </div>
+            </div>
+
+            <!-- Opciones de pago -->
+            <div class="opciones-pago">
+                <h4>Opciones de Pago</h4>
+                <div class="form-group">
+                    <input type="radio" id="efectivo" name="pago" value="efectivo" checked>
+                    <label for="efectivo">Efectivo</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" id="tarjeta" name="pago" value="tarjeta">
+                    <label for="tarjeta">Tarjeta de crédito/débito</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" id="credito" name="pago" value="credito">
+                    <label for="credito">Crédito (solo clientes permanentes)</label>
+                </div>
+            </div>
+
+            <button id="btn-finalizar" class="btn-finalizar">Finalizar Compra</button>
+        </section>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>My Delights &copy; 2023 - Todos los derechos reservados</p>
+        <p>Contacto: info@mydelights.com | Tel: 123-456-7890</p>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html> 
