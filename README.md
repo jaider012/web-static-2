@@ -30,6 +30,15 @@ Si solo quieres echar un vistazo rápido al código sin descargar nada:
 2. Haz clic en cualquier archivo para ver su contenido
 3. Los archivos HTML se mostrarán como código, no como páginas web renderizadas
 
+### Opción 3: Para usuarios que tienen Git instalado
+
+Si ya tienes Git instalado en tu computadora, puedes clonar este repositorio:
+
+1. Abre tu terminal o línea de comandos
+2. Ejecuta el siguiente comando:
+
+{{git clone https://github.com/jaider012/web-static-2.git
+}}
 
 ## Funcionalidades
 
