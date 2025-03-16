@@ -576,9 +576,9 @@ function updateCartDisplay() {
             <td>$${item.price.toLocaleString()}</td>
             <td>
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-sm btn-outline-secondary btn-cantidad me-2">-</button>
+                    <button class="btn btn-sm btn-outline btn-cantidad mr-2">-</button>
                     <span class="mx-2">${item.quantity}</span>
-                    <button class="btn btn-sm btn-outline-secondary btn-cantidad ms-2">+</button>
+                    <button class="btn btn-sm btn-outline btn-cantidad ml-2">+</button>
                 </div>
             </td>
             <td>$${subtotal.toLocaleString()}</td>

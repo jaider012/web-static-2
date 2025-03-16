@@ -945,4 +945,60 @@ footer hr {
 .estado-cancelado {
     background-color: #f8d7da;
     color: #721c24;
+}
+
+/* Estilos específicos para el carrito */
+.tabla-carrito th,
+.tabla-carrito td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.tabla-carrito .btn-cantidad {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.mx-2 {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.fw-bold {
+    font-weight: 700;
+}
+
+/* Estilos para el resumen de compra */
+.resumen-compra hr {
+    margin: 15px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+/* Estilos para las opciones de entrega y pago */
+.opciones-entrega, .opciones-pago {
+    margin-bottom: 30px;
+}
+
+.opciones-entrega h3, .opciones-pago h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Estilos para el mensaje de tipo de cliente */
+#cliente-info {
+    display: flex;
+    align-items: center;
+}
+
+#cliente-info i {
+    margin-right: 10px;
+    font-size: 1.2rem;
 } 
