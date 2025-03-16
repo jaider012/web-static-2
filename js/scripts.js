@@ -1,14 +1,19 @@
 // Variables globales
 let cart = [];
 let userType = "nuevo"; // nuevo, casual, permanente
+let currentUser = null;
+let users = [];
 
 // Función para inicializar la aplicación
 document.addEventListener('DOMContentLoaded', function() {
     // Inicializar el navbar
     initNavbar();
     
-    // Cargar tipo de usuario desde localStorage
-    loadUserType();
+    // Cargar usuarios desde localStorage
+    loadUsers();
+    
+    // Cargar usuario actual desde localStorage
+    loadCurrentUser();
     
     // Inicializar el carrito desde localStorage
     loadCart();
@@ -27,13 +32,235 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Habilitar opción de crédito para clientes permanentes
     updateCreditOption();
+    
+    // Inicializar barra de usuarios de prueba
+    initTestUserBar();
 });
+
+// Cargar usuarios desde localStorage
+function loadUsers() {
+    const savedUsers = localStorage.getItem('myDelightsUsers');
+    if (savedUsers) {
+        users = JSON.parse(savedUsers);
+    } else {
+        // Crear algunos usuarios de prueba si no existen
+        users = [
+            {
+                cedula: '1234567890',
+                nombre: 'Cliente Nuevo',
+                sexo: 'masculino',
+                fechaNacimiento: '1990-01-01',
+                direccion: 'Calle 123',
+                telefono: '1234567890',
+                email: 'nuevo@example.com',
+                password: '123456',
+                tipo: 'nuevo',
+                fechaRegistro: new Date().toISOString()
+            },
+            {
+                cedula: '0987654321',
+                nombre: 'Cliente Casual',
+                sexo: 'femenino',
+                fechaNacimiento: '1985-05-15',
+                direccion: 'Avenida 456',
+                telefono: '0987654321',
+                email: 'casual@example.com',
+                password: '123456',
+                tipo: 'casual',
+                fechaRegistro: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString() // 90 días atrás
+            },
+            {
+                cedula: '5678901234',
+                nombre: 'Cliente Permanente',
+                sexo: 'otro',
+                fechaNacimiento: '1980-10-20',
+                direccion: 'Plaza 789',
+                telefono: '5678901234',
+                email: 'permanente@example.com',
+                password: '123456',
+                tipo: 'permanente',
+                fechaRegistro: new Date(Date.now() - 180 * 24 * 60 * 60 * 1000).toISOString() // 180 días atrás
+            }
+        ];
+        saveUsers();
+    }
+}
+
+// Guardar usuarios en localStorage
+function saveUsers() {
+    localStorage.setItem('myDelightsUsers', JSON.stringify(users));
+}
+
+// Cargar usuario actual
+function loadCurrentUser() {
+    const savedCurrentUser = localStorage.getItem('myDelightsCurrentUser');
+    if (savedCurrentUser) {
+        currentUser = JSON.parse(savedCurrentUser);
+        userType = currentUser.tipo;
+        
+        // Actualizar elementos de la interfaz según el usuario logueado
+        updateUIForLoggedUser();
+    }
+}
+
+// Guardar usuario actual
+function saveCurrentUser() {
+    if (currentUser) {
+        localStorage.setItem('myDelightsCurrentUser', JSON.stringify(currentUser));
+    } else {
+        localStorage.removeItem('myDelightsCurrentUser');
+    }
+}
+
+// Actualizar interfaz para usuario logueado
+function updateUIForLoggedUser() {
+    const loginLinks = document.querySelectorAll('.nav-link[href="registro.html"]');
+    const profileLinks = document.querySelectorAll('.nav-link[href="perfil.html"]');
+    
+    if (currentUser) {
+        // Usuario logueado
+        loginLinks.forEach(link => {
+            link.textContent = 'Cerrar Sesión';
+            link.setAttribute('href', '#');
+            link.classList.add('logout-link');
+        });
+        
+        // Agregar evento de logout
+        document.querySelectorAll('.logout-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+        });
+        
+        // Mostrar enlace de perfil
+        profileLinks.forEach(link => {
+            link.style.display = 'block';
+        });
+    } else {
+        // Usuario no logueado
+        loginLinks.forEach(link => {
+            link.textContent = 'Registro/Login';
+            link.setAttribute('href', 'registro.html');
+            link.classList.remove('logout-link');
+        });
+        
+        // Ocultar enlace de perfil
+        profileLinks.forEach(link => {
+            link.style.display = 'none';
+        });
+    }
+}
+
+// Función de logout
+function logout() {
+    Swal.fire({
+        title: '¿Cerrar sesión?',
+        text: '¿Estás seguro de que deseas cerrar sesión?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, cerrar sesión',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            currentUser = null;
+            userType = 'nuevo';
+            saveCurrentUser();
+            
+            Swal.fire({
+                title: 'Sesión cerrada',
+                text: 'Has cerrado sesión correctamente',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = 'index.html';
+            });
+        }
+    });
+}
+
+// Inicializar barra de usuarios de prueba
+function initTestUserBar() {
+    // Solo mostrar en la página de registro
+    if (!window.location.pathname.includes('registro.html')) return;
+    
+    // Crear la barra de usuarios de prueba
+    const testUserBar = document.createElement('div');
+    testUserBar.className = 'test-user-bar alert alert-info mt-3';
+    testUserBar.innerHTML = `
+        <h5>Usuarios de prueba</h5>
+        <p>Puedes usar estos usuarios para probar la aplicación:</p>
+        <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-sm btn-outline-primary test-user-btn" data-email="nuevo@example.com" data-password="123456">Cliente Nuevo</button>
+            <button class="btn btn-sm btn-outline-primary test-user-btn" data-email="casual@example.com" data-password="123456">Cliente Casual</button>
+            <button class="btn btn-sm btn-outline-primary test-user-btn" data-email="permanente@example.com" data-password="123456">Cliente Permanente</button>
+        </div>
+    `;
+    
+    // Insertar la barra después del formulario de login
+    const loginSection = document.querySelector('.login');
+    if (loginSection) {
+        loginSection.appendChild(testUserBar);
+        
+        // Agregar eventos a los botones
+        document.querySelectorAll('.test-user-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const email = this.getAttribute('data-email');
+                const password = this.getAttribute('data-password');
+                
+                // Rellenar el formulario de login
+                document.getElementById('login-email').value = email;
+                document.getElementById('login-password').value = password;
+                
+                // Opcional: hacer login automáticamente
+                Swal.fire({
+                    title: 'Usuario de prueba',
+                    text: `¿Deseas iniciar sesión como ${email}?`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, iniciar sesión',
+                    cancelButtonText: 'No, solo rellenar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Buscar el usuario
+                        const user = users.find(u => u.email === email && u.password === password);
+                        if (user) {
+                            loginUser(user);
+                        }
+                    }
+                });
+            });
+        });
+    }
+}
+
+// Función para iniciar sesión
+function loginUser(user) {
+    currentUser = user;
+    userType = user.tipo;
+    saveCurrentUser();
+    
+    Swal.fire({
+        title: '¡Bienvenido!',
+        text: `Has iniciado sesión como ${user.nombre}`,
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
+    }).then(() => {
+        window.location.href = 'index.html';
+    });
+}
 
 // Cargar tipo de usuario
 function loadUserType() {
-    const savedUserType = localStorage.getItem('myDelightsUserType');
-    if (savedUserType) {
-        userType = savedUserType;
+    if (currentUser) {
+        userType = currentUser.tipo;
+    } else {
+        const savedUserType = localStorage.getItem('myDelightsUserType');
+        if (savedUserType) {
+            userType = savedUserType;
+        }
     }
 }
 
@@ -58,16 +285,15 @@ function updateClientTypeMessage() {
 // Habilitar opción de crédito para clientes permanentes
 function updateCreditOption() {
     const creditoOption = document.getElementById('credito');
-    if (!creditoOption) return;
+    const creditoContainer = document.getElementById('credito-container');
+    if (!creditoOption || !creditoContainer) return;
     
     if (userType === 'permanente') {
         creditoOption.disabled = false;
-        document.getElementById('credito-container').classList.add('text-dark');
-        document.getElementById('credito-container').classList.remove('text-muted');
+        creditoContainer.classList.remove('text-muted');
     } else {
         creditoOption.disabled = true;
-        document.getElementById('credito-container').classList.add('text-muted');
-        document.getElementById('credito-container').classList.remove('text-dark');
+        creditoContainer.classList.add('text-muted');
     }
 }
 
@@ -466,10 +692,14 @@ function initFormValidations() {
         registroForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Validar campos
-            const cedula = document.getElementById('cedula').value;
-            const nombre = document.getElementById('nombre').value;
-            const email = document.getElementById('email').value;
+            // Obtener valores de los campos
+            const cedula = document.getElementById('cedula').value.trim();
+            const nombre = document.getElementById('nombre').value.trim();
+            const sexo = document.getElementById('sexo').value;
+            const fechaNacimiento = document.getElementById('fecha-nacimiento').value;
+            const direccion = document.getElementById('direccion').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
             
@@ -483,11 +713,70 @@ function initFormValidations() {
                 return;
             }
             
+            // Verificar si la cédula ya existe
+            if (users.some(user => user.cedula === cedula)) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Esta cédula ya está registrada',
+                    icon: 'error'
+                });
+                return;
+            }
+            
             // Validar nombre (al menos 2 palabras)
-            if (nombre.trim().split(' ').filter(word => word.length > 0).length < 2) {
+            if (nombre.split(' ').filter(word => word.length > 0).length < 2) {
                 Swal.fire({
                     title: 'Error',
                     text: 'Ingresa tu nombre completo (nombre y apellido)',
+                    icon: 'error'
+                });
+                return;
+            }
+            
+            // Validar fecha de nacimiento
+            if (!fechaNacimiento) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Selecciona tu fecha de nacimiento',
+                    icon: 'error'
+                });
+                return;
+            }
+            
+            // Validar que sea mayor de edad
+            const birthDate = new Date(fechaNacimiento);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            if (age < 18) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Debes ser mayor de edad para registrarte',
+                    icon: 'error'
+                });
+                return;
+            }
+            
+            // Validar dirección
+            if (direccion.length < 5) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Ingresa una dirección válida',
+                    icon: 'error'
+                });
+                return;
+            }
+            
+            // Validar teléfono
+            if (!/^\d{7,10}$/.test(telefono.replace(/\D/g, ''))) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Ingresa un número de teléfono válido (7-10 dígitos)',
                     icon: 'error'
                 });
                 return;
@@ -498,6 +787,16 @@ function initFormValidations() {
                 Swal.fire({
                     title: 'Error',
                     text: 'Ingresa un correo electrónico válido',
+                    icon: 'error'
+                });
+                return;
+            }
+            
+            // Verificar si el email ya existe
+            if (users.some(user => user.email === email)) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Este correo electrónico ya está registrado',
                     icon: 'error'
                 });
                 return;
@@ -523,20 +822,36 @@ function initFormValidations() {
                 return;
             }
             
-            // Si todo está bien, mostrar mensaje de éxito
+            // Crear nuevo usuario
+            const newUser = {
+                cedula,
+                nombre,
+                sexo,
+                fechaNacimiento,
+                direccion,
+                telefono,
+                email,
+                password,
+                tipo: 'nuevo', // Por defecto, todos los usuarios nuevos son de tipo "nuevo"
+                fechaRegistro: new Date().toISOString()
+            };
+            
+            // Agregar usuario a la lista
+            users.push(newUser);
+            saveUsers();
+            
+            // Iniciar sesión con el nuevo usuario
+            currentUser = newUser;
+            userType = newUser.tipo;
+            saveCurrentUser();
+            
+            // Mostrar mensaje de éxito
             Swal.fire({
                 title: '¡Registro exitoso!',
                 text: 'Tu cuenta ha sido creada correctamente',
                 icon: 'success',
-                confirmButtonText: 'Iniciar sesión'
+                confirmButtonText: 'Continuar'
             }).then(() => {
-                // Limpiar formulario
-                registroForm.reset();
-                
-                // Simular inicio de sesión
-                userType = 'nuevo';
-                localStorage.setItem('myDelightsUserType', userType);
-                
                 // Redirigir a la página principal
                 window.location.href = 'index.html';
             });
@@ -549,8 +864,8 @@ function initFormValidations() {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Validar campos
-            const email = document.getElementById('login-email').value;
+            // Obtener valores de los campos
+            const email = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value;
             
             // Validar email
@@ -573,23 +888,20 @@ function initFormValidations() {
                 return;
             }
             
-            // Simular inicio de sesión exitoso
-            Swal.fire({
-                title: '¡Bienvenido!',
-                text: 'Has iniciado sesión correctamente',
-                icon: 'success',
-                confirmButtonText: 'Continuar'
-            }).then(() => {
-                // Limpiar formulario
-                loginForm.reset();
-                
-                // Simular tipo de usuario (para demostración)
-                userType = 'casual';
-                localStorage.setItem('myDelightsUserType', userType);
-                
-                // Redirigir a la página principal
-                window.location.href = 'index.html';
-            });
+            // Buscar usuario
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Usuario encontrado, iniciar sesión
+                loginUser(user);
+            } else {
+                // Usuario no encontrado o contraseña incorrecta
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Correo electrónico o contraseña incorrectos',
+                    icon: 'error'
+                });
+            }
         });
     }
     
@@ -661,60 +973,110 @@ function initFormValidations() {
 
 // Funciones para el perfil de usuario
 function initProfileFunctionality() {
+    // Cargar datos del perfil si estamos en la página de perfil
+    if (window.location.pathname.includes('perfil.html')) {
+        loadProfileData();
+    }
+    
     // Botón de editar perfil
     const editarPerfilBtn = document.getElementById('btn-editar-perfil');
     if (editarPerfilBtn) {
         editarPerfilBtn.addEventListener('click', function() {
-            // Obtener datos actuales
-            const nombre = document.getElementById('perfil-nombre').textContent;
-            const cedula = document.getElementById('perfil-cedula').textContent;
-            const email = document.getElementById('perfil-email').textContent;
-            const telefono = document.getElementById('perfil-telefono').textContent;
-            const direccion = document.getElementById('perfil-direccion').textContent;
+            if (!currentUser) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Debes iniciar sesión para editar tu perfil',
+                    icon: 'error'
+                });
+                return;
+            }
             
             // Mostrar formulario de edición
             Swal.fire({
                 title: 'Editar Perfil',
                 html: `
-                    <div class="form-group">
-                        <label for="edit-nombre">Nombre:</label>
-                        <input type="text" id="edit-nombre" class="swal2-input" value="${nombre}">
+                    <div class="form-group mb-3">
+                        <label for="edit-nombre" class="form-label">Nombre:</label>
+                        <input type="text" id="edit-nombre" class="form-control" value="${currentUser.nombre}">
                     </div>
-                    <div class="form-group">
-                        <label for="edit-cedula">Cédula:</label>
-                        <input type="text" id="edit-cedula" class="swal2-input" value="${cedula}" disabled>
+                    <div class="form-group mb-3">
+                        <label for="edit-cedula" class="form-label">Cédula:</label>
+                        <input type="text" id="edit-cedula" class="form-control" value="${currentUser.cedula}" disabled>
                     </div>
-                    <div class="form-group">
-                        <label for="edit-email">Email:</label>
-                        <input type="email" id="edit-email" class="swal2-input" value="${email}">
+                    <div class="form-group mb-3">
+                        <label for="edit-email" class="form-label">Email:</label>
+                        <input type="email" id="edit-email" class="form-control" value="${currentUser.email}">
                     </div>
-                    <div class="form-group">
-                        <label for="edit-telefono">Teléfono:</label>
-                        <input type="tel" id="edit-telefono" class="swal2-input" value="${telefono}">
+                    <div class="form-group mb-3">
+                        <label for="edit-telefono" class="form-label">Teléfono:</label>
+                        <input type="tel" id="edit-telefono" class="form-control" value="${currentUser.telefono}">
                     </div>
-                    <div class="form-group">
-                        <label for="edit-direccion">Dirección:</label>
-                        <input type="text" id="edit-direccion" class="swal2-input" value="${direccion}">
+                    <div class="form-group mb-3">
+                        <label for="edit-direccion" class="form-label">Dirección:</label>
+                        <input type="text" id="edit-direccion" class="form-control" value="${currentUser.direccion}">
                     </div>
                 `,
                 showCancelButton: true,
                 confirmButtonText: 'Guardar',
                 cancelButtonText: 'Cancelar',
                 preConfirm: () => {
+                    // Validar campos
+                    const nombre = document.getElementById('edit-nombre').value.trim();
+                    const email = document.getElementById('edit-email').value.trim();
+                    const telefono = document.getElementById('edit-telefono').value.trim();
+                    const direccion = document.getElementById('edit-direccion').value.trim();
+                    
+                    // Validar nombre
+                    if (nombre.split(' ').filter(word => word.length > 0).length < 2) {
+                        Swal.showValidationMessage('Ingresa tu nombre completo (nombre y apellido)');
+                        return false;
+                    }
+                    
+                    // Validar email
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                        Swal.showValidationMessage('Ingresa un correo electrónico válido');
+                        return false;
+                    }
+                    
+                    // Validar teléfono
+                    if (!/^\d{7,10}$/.test(telefono.replace(/\D/g, ''))) {
+                        Swal.showValidationMessage('Ingresa un número de teléfono válido (7-10 dígitos)');
+                        return false;
+                    }
+                    
+                    // Validar dirección
+                    if (direccion.length < 5) {
+                        Swal.showValidationMessage('Ingresa una dirección válida');
+                        return false;
+                    }
+                    
                     return {
-                        nombre: document.getElementById('edit-nombre').value,
-                        email: document.getElementById('edit-email').value,
-                        telefono: document.getElementById('edit-telefono').value,
-                        direccion: document.getElementById('edit-direccion').value
+                        nombre,
+                        email,
+                        telefono,
+                        direccion
                     };
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Actualizar datos del usuario
+                    currentUser.nombre = result.value.nombre;
+                    currentUser.email = result.value.email;
+                    currentUser.telefono = result.value.telefono;
+                    currentUser.direccion = result.value.direccion;
+                    
+                    // Actualizar en la lista de usuarios
+                    const userIndex = users.findIndex(u => u.cedula === currentUser.cedula);
+                    if (userIndex !== -1) {
+                        users[userIndex] = currentUser;
+                        saveUsers();
+                    }
+                    
+                    // Guardar usuario actual
+                    saveCurrentUser();
+                    
                     // Actualizar datos en la página
-                    document.getElementById('perfil-nombre').textContent = result.value.nombre;
-                    document.getElementById('perfil-email').textContent = result.value.email;
-                    document.getElementById('perfil-telefono').textContent = result.value.telefono;
-                    document.getElementById('perfil-direccion').textContent = result.value.direccion;
+                    loadProfileData();
                     
                     Swal.fire({
                         title: '¡Perfil actualizado!',
@@ -732,9 +1094,18 @@ function initProfileFunctionality() {
     const eliminarCuentaBtn = document.getElementById('btn-eliminar-cuenta');
     if (eliminarCuentaBtn) {
         eliminarCuentaBtn.addEventListener('click', function() {
+            if (!currentUser) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Debes iniciar sesión para eliminar tu cuenta',
+                    icon: 'error'
+                });
+                return;
+            }
+            
             Swal.fire({
                 title: '¿Estás seguro?',
-                text: 'Esta acción no se puede deshacer',
+                text: 'Esta acción eliminará permanentemente tu cuenta y todos tus datos',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, eliminar mi cuenta',
@@ -742,18 +1113,62 @@ function initProfileFunctionality() {
                 confirmButtonColor: '#d33'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Eliminar usuario de la lista
+                    users = users.filter(u => u.cedula !== currentUser.cedula);
+                    saveUsers();
+                    
+                    // Cerrar sesión
+                    currentUser = null;
+                    userType = 'nuevo';
+                    saveCurrentUser();
+                    
                     Swal.fire({
                         title: 'Cuenta eliminada',
                         text: 'Tu cuenta ha sido eliminada correctamente',
                         icon: 'success',
                         confirmButtonText: 'Aceptar'
                     }).then(() => {
-                        // Limpiar datos y redirigir
-                        localStorage.removeItem('myDelightsUserType');
+                        // Redirigir a la página principal
                         window.location.href = 'index.html';
                     });
                 }
             });
         });
+    }
+}
+
+// Cargar datos del perfil
+function loadProfileData() {
+    if (!currentUser) return;
+    
+    // Elementos del perfil
+    const nombreElement = document.getElementById('perfil-nombre');
+    const cedulaElement = document.getElementById('perfil-cedula');
+    const emailElement = document.getElementById('perfil-email');
+    const telefonoElement = document.getElementById('perfil-telefono');
+    const direccionElement = document.getElementById('perfil-direccion');
+    const tipoClienteElement = document.getElementById('perfil-tipo-cliente');
+    
+    // Actualizar elementos si existen
+    if (nombreElement) nombreElement.textContent = currentUser.nombre;
+    if (cedulaElement) cedulaElement.textContent = currentUser.cedula;
+    if (emailElement) emailElement.textContent = currentUser.email;
+    if (telefonoElement) telefonoElement.textContent = currentUser.telefono;
+    if (direccionElement) direccionElement.textContent = currentUser.direccion;
+    
+    if (tipoClienteElement) {
+        let tipoTexto = '';
+        switch (currentUser.tipo) {
+            case 'nuevo':
+                tipoTexto = 'Cliente Nuevo';
+                break;
+            case 'casual':
+                tipoTexto = 'Cliente Casual';
+                break;
+            case 'permanente':
+                tipoTexto = 'Cliente Permanente';
+                break;
+        }
+        tipoClienteElement.textContent = tipoTexto;
     }
 } 
