@@ -16,19 +16,19 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <!-- Navbar mejorado para todas las páginas -->
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light fixed-top custom-navbar">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
           <a class="navbar-brand" href="index.html">
-            <div class="logo-container">
-              <img src="images/logo.png" alt="My Delights Logo" height="50" class="logo-img">
-              <span class="logo-text">My Delights</span>
-            </div>
+            <img src="images/logo.png" alt="My Delights" height="50" />
           </a>
           <button
             class="navbar-toggler"
@@ -44,46 +44,29 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                  <i class="fas fa-home nav-icon"></i>
-                  <span class="nav-text">Inicio</span>
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fas fa-utensils nav-icon"></i>
-                  <span class="nav-text">Menú</span>
-                </a>
-                <ul class="dropdown-menu animate__animated animate__fadeIn" aria-labelledby="menuDropdown">
-                  <li><a class="dropdown-item" href="menu-carta.html">Menú a la Carta</a></li>
-                  <li><a class="dropdown-item" href="menu-corriente.html">Comida Corriente</a></li>
-                </ul>
+                <a class="nav-link active" href="index.html">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="eventos.html">
-                  <i class="fas fa-glass-cheers nav-icon"></i>
-                  <span class="nav-text">Eventos</span>
-                </a>
+                <a class="nav-link" href="menu-carta.html">Menú a la Carta</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="registro.html">
-                  <i class="fas fa-user-plus nav-icon"></i>
-                  <span class="nav-text">Registro/Login</span>
-                </a>
+                <a class="nav-link" href="menu-corriente.html"
+                  >Comida Corriente</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="perfil.html">
-                  <i class="fas fa-user-circle nav-icon"></i>
-                  <span class="nav-text">Mi Perfil</span>
-                </a>
+                <a class="nav-link" href="eventos.html">Eventos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link cart-link" href="carrito.html">
-                  <div class="cart-icon-container">
-                    <i class="fas fa-shopping-cart nav-icon"></i>
-                    <span id="cart-count" class="badge bg-danger cart-badge">0</span>
-                  </div>
-                  <span class="nav-text">Carrito</span>
+                <a class="nav-link" href="registro.html">Registro/Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="perfil.html">Mi Perfil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="carrito.html">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span id="cart-count" class="badge bg-danger">0</span>
                 </a>
               </li>
             </ul>
@@ -93,7 +76,9 @@
     </header>
 
     <main class="container mt-5 pt-5">
-      <h2 class="text-center mb-5 animate__animated animate__fadeInDown">Eventos y Servicios</h2>
+      <h2 class="text-center mb-5 animate__animated animate__fadeInDown">
+        Eventos y Servicios
+      </h2>
 
       <!-- Sección de eventos familiares -->
       <section class="categoria-eventos mb-5 animate__animated animate__fadeIn">
@@ -102,38 +87,61 @@
           <!-- Paquete 1 -->
           <div class="col-md-4 mb-4">
             <div class="card evento h-100">
-              <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.12.png" class="card-img-top" alt="Evento familiar">
+              <img
+                src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.12.png"
+                class="card-img-top"
+                alt="Evento familiar"
+              />
               <div class="card-body">
                 <h4 class="card-title">Paquete Familiar Básico</h4>
-                <p class="card-text">Incluye: Menú para 20 personas, decoración básica, servicio de meseros</p>
+                <p class="card-text">
+                  Incluye: Menú para 20 personas, decoración básica, servicio de
+                  meseros
+                </p>
                 <p class="precio">Desde $500.000</p>
-                <button class="btn btn-primary btn-cotizar w-100">Solicitar Cotización</button>
+                <button class="btn btn-primary btn-cotizar w-100">
+                  Solicitar Cotización
+                </button>
               </div>
             </div>
           </div>
-          
+
           <!-- Paquete 2 -->
           <div class="col-md-4 mb-4">
             <div class="card evento h-100">
-              <img src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.29.png" class="card-img-top" alt="Evento familiar">
+              <img
+                src="https://jumboalacarta.com.ar/wp-content/uploads/2019/06/Captura-de-pantalla-2019-06-12-a-las-14.52.29.png"
+                class="card-img-top"
+                alt="Evento familiar"
+              />
               <div class="card-body">
                 <h4 class="card-title">Paquete Familiar Premium</h4>
-                <p class="card-text">Incluye: Menú gourmet para 30 personas, decoración temática, servicio de meseros, DJ</p>
+                <p class="card-text">
+                  Incluye: Menú gourmet para 30 personas, decoración temática,
+                  servicio de meseros, DJ
+                </p>
                 <p class="precio">Desde $800.000</p>
-                <button class="btn btn-primary btn-cotizar w-100">Solicitar Cotización</button>
+                <button class="btn btn-primary btn-cotizar w-100">
+                  Solicitar Cotización
+                </button>
               </div>
             </div>
           </div>
-          
+
           <!-- Paquete 3 -->
           <div class="col-md-4 mb-4">
             <div class="card evento h-100">
-              <img src="images/placeholder.jpg" alt="Evento familiar">
+              <img src="images/placeholder.jpg" alt="Evento familiar" />
               <div class="card-body">
                 <h4 class="card-title">Paquete Familiar Especial</h4>
-                <p class="card-text">Incluye: Menú gourmet para 40 personas, decoración temática, servicio de meseros, DJ</p>
+                <p class="card-text">
+                  Incluye: Menú gourmet para 40 personas, decoración temática,
+                  servicio de meseros, DJ
+                </p>
                 <p class="precio">Desde $1.000.000</p>
-                <button class="btn btn-primary btn-cotizar w-100">Solicitar Cotización</button>
+                <button class="btn btn-primary btn-cotizar w-100">
+                  Solicitar Cotización
+                </button>
               </div>
             </div>
           </div>

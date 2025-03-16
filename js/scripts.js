@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar el navbar
     initNavbar();
     
+    // Cargar tipo de usuario desde localStorage
+    loadUserType();
+    
     // Inicializar el carrito desde localStorage
     loadCart();
     
@@ -18,7 +21,55 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Inicializar funcionalidad de perfil
     initProfileFunctionality();
+    
+    // Actualizar mensaje de tipo de cliente
+    updateClientTypeMessage();
+    
+    // Habilitar opción de crédito para clientes permanentes
+    updateCreditOption();
 });
+
+// Cargar tipo de usuario
+function loadUserType() {
+    const savedUserType = localStorage.getItem('myDelightsUserType');
+    if (savedUserType) {
+        userType = savedUserType;
+    }
+}
+
+// Actualizar mensaje según tipo de cliente
+function updateClientTypeMessage() {
+    const clienteInfoElement = document.getElementById('cliente-tipo-mensaje');
+    if (!clienteInfoElement) return;
+    
+    switch (userType) {
+        case 'nuevo':
+            clienteInfoElement.textContent = 'Eres un cliente nuevo. Compras mayores a $250,000 obtienen un 2% de descuento.';
+            break;
+        case 'casual':
+            clienteInfoElement.textContent = 'Eres un cliente casual. Obtienes un 2% de descuento en todas tus compras y 6% en compras mayores a $200,000.';
+            break;
+        case 'permanente':
+            clienteInfoElement.textContent = 'Eres un cliente permanente. Obtienes un 4% de descuento en todas tus compras y 10% en compras mayores a $150,000.';
+            break;
+    }
+}
+
+// Habilitar opción de crédito para clientes permanentes
+function updateCreditOption() {
+    const creditoOption = document.getElementById('credito');
+    if (!creditoOption) return;
+    
+    if (userType === 'permanente') {
+        creditoOption.disabled = false;
+        document.getElementById('credito-container').classList.add('text-dark');
+        document.getElementById('credito-container').classList.remove('text-muted');
+    } else {
+        creditoOption.disabled = true;
+        document.getElementById('credito-container').classList.add('text-muted');
+        document.getElementById('credito-container').classList.remove('text-dark');
+    }
+}
 
 // Funciones del navbar
 function initNavbar() {
@@ -49,7 +100,7 @@ function initNavbar() {
 // Funciones del carrito
 function initCartFunctionality() {
     // Agregar event listeners a los botones de "Agregar al carrito"
-    const addButtons = document.querySelectorAll('.btn-agregar');
+    const addButtons = document.querySelectorAll('.btn-agregar, .add-to-cart');
     if (addButtons.length > 0) {
         addButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -139,9 +190,31 @@ function initCartFunctionality() {
                 return;
             }
             
+            // Verificar método de pago
+            const metodoPago = document.querySelector('input[name="pago"]:checked').value;
+            const entregaOption = document.querySelector('input[name="entrega"]:checked').value;
+            
+            // Mensaje personalizado según método de pago
+            let mensajeAdicional = '';
+            if (metodoPago === 'efectivo') {
+                mensajeAdicional = 'Prepara el efectivo para el momento de la entrega.';
+            } else if (metodoPago === 'tarjeta') {
+                mensajeAdicional = 'Te redirigiremos a la pasarela de pago.';
+            } else if (metodoPago === 'credito') {
+                mensajeAdicional = 'El monto será cargado a tu cuenta de crédito.';
+            }
+            
+            // Mensaje adicional para entrega
+            let entregaMensaje = '';
+            if (entregaOption === 'domicilio') {
+                entregaMensaje = 'Tu pedido será entregado a domicilio en aproximadamente 45 minutos.';
+            } else {
+                entregaMensaje = 'Tu pedido estará listo para recoger en 30 minutos.';
+            }
+            
             Swal.fire({
                 title: '¡Compra finalizada!',
-                text: 'Gracias por tu compra. Recibirás un correo con los detalles.',
+                html: `Gracias por tu compra.<br>${entregaMensaje}<br>${mensajeAdicional}`,
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
@@ -154,8 +227,8 @@ function initCartFunctionality() {
         });
     }
     
-    // Agregar event listeners a las opciones de entrega
-    const deliveryOptions = document.querySelectorAll('input[name="entrega"]');
+    // Agregar event listeners a las opciones de entrega y pago
+    const deliveryOptions = document.querySelectorAll('input[name="entrega"], input[name="pago"]');
     if (deliveryOptions.length > 0) {
         deliveryOptions.forEach(option => {
             option.addEventListener('change', function() {
@@ -248,10 +321,6 @@ function animateCartIcon() {
 
 function updateCartDisplay() {
     const cartItemsContainer = document.getElementById('carrito-items');
-    const subtotalElement = document.getElementById('subtotal');
-    const descuentoElement = document.getElementById('descuento');
-    const recargoElement = document.getElementById('recargo');
-    const totalElement = document.getElementById('total');
     
     if (!cartItemsContainer) return;
     
@@ -265,10 +334,8 @@ function updateCartDisplay() {
         `;
         cartItemsContainer.appendChild(emptyRow);
         
-        if (subtotalElement) subtotalElement.textContent = '$0';
-        if (descuentoElement) descuentoElement.textContent = '$0';
-        if (recargoElement) recargoElement.textContent = '$0';
-        if (totalElement) totalElement.textContent = '$0';
+        // Actualizar el resumen del carrito
+        updateCartSummary();
         
         return;
     }
@@ -282,19 +349,66 @@ function updateCartDisplay() {
             <td>${item.name}</td>
             <td>$${item.price.toLocaleString()}</td>
             <td>
-                <button class="btn-cantidad">-</button>
-                <span>${item.quantity}</span>
-                <button class="btn-cantidad">+</button>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-sm btn-outline-secondary btn-cantidad me-2">-</button>
+                    <span class="mx-2">${item.quantity}</span>
+                    <button class="btn btn-sm btn-outline-secondary btn-cantidad ms-2">+</button>
+                </div>
             </td>
             <td>$${subtotal.toLocaleString()}</td>
-            <td><button class="btn-eliminar">Eliminar</button></td>
+            <td><button class="btn btn-sm btn-danger btn-eliminar">Eliminar</button></td>
         `;
         
         cartItemsContainer.appendChild(row);
     });
     
     // Reinicializar los event listeners para los nuevos botones
-    initCartFunctionality();
+    const quantityButtons = document.querySelectorAll('.btn-cantidad');
+    quantityButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const action = this.textContent;
+            const row = this.closest('tr');
+            const productName = row.querySelector('td:first-child').textContent;
+            
+            if (action === '+') {
+                updateCartItemQuantity(productName, 1);
+            } else if (action === '-') {
+                updateCartItemQuantity(productName, -1);
+            }
+            
+            updateCartDisplay();
+        });
+    });
+    
+    const removeButtons = document.querySelectorAll('.btn-eliminar');
+    removeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const row = this.closest('tr');
+            const productName = row.querySelector('td:first-child').textContent;
+            
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: `¿Deseas eliminar ${productName} del carrito?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    removeFromCart(productName);
+                    updateCartDisplay();
+                    
+                    Swal.fire({
+                        title: 'Eliminado',
+                        text: 'El producto ha sido eliminado del carrito',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        });
+    });
     
     // Actualizar el resumen del carrito
     updateCartSummary();
@@ -303,6 +417,7 @@ function updateCartDisplay() {
 function updateCartSummary() {
     const subtotalElement = document.getElementById('subtotal');
     const descuentoElement = document.getElementById('descuento');
+    const descuentoPorcentajeElement = document.getElementById('descuento-porcentaje');
     const recargoElement = document.getElementById('recargo');
     const totalElement = document.getElementById('total');
     
@@ -338,6 +453,7 @@ function updateCartSummary() {
     // Actualizar elementos
     subtotalElement.textContent = `$${subtotal.toLocaleString()}`;
     descuentoElement.textContent = `$${descuento.toLocaleString()}`;
+    descuentoPorcentajeElement.textContent = `${(descuentoPorcentaje * 100).toFixed(0)}%`;
     recargoElement.textContent = `$${recargo.toLocaleString()}`;
     totalElement.textContent = `$${total.toLocaleString()}`;
 }
