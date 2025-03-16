@@ -35,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Inicializar barra de usuarios de prueba
     initTestUserBar();
+    
+    // Inicializar funcionalidad de eventos
+    initEventosFunctionality();
 });
 
 // Cargar usuarios desde localStorage
@@ -1312,5 +1315,53 @@ function updateClientProgress() {
             statusCasual.textContent = '¡Nivel completado!';
             statusPermanente.textContent = '¡Nivel máximo alcanzado!';
             break;
+    }
+}
+
+// Funciones para la página de eventos
+function initEventosFunctionality() {
+    // Solo ejecutar en la página de eventos
+    if (!window.location.pathname.includes('eventos.html')) return;
+    
+    // Agregar event listeners a los botones de cotización
+    const cotizarButtons = document.querySelectorAll('.btn-cotizar');
+    if (cotizarButtons.length > 0) {
+        cotizarButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Obtener información del paquete
+                const card = this.closest('.card, .evento');
+                const titulo = card.querySelector('h4').textContent;
+                const precio = card.querySelector('.precio').textContent;
+                
+                // Desplazar a la sección del formulario
+                const formulario = document.querySelector('.formulario-cotizacion');
+                formulario.scrollIntoView({ behavior: 'smooth' });
+                
+                // Pre-llenar el tipo de evento basado en la sección
+                const seccion = this.closest('.categoria-eventos');
+                const tituloSeccion = seccion.querySelector('h3').textContent.toLowerCase();
+                const tipoEventoSelect = document.getElementById('tipo-evento');
+                
+                if (tituloSeccion.includes('familiar')) {
+                    tipoEventoSelect.value = 'familiar';
+                } else if (tituloSeccion.includes('empresarial')) {
+                    tipoEventoSelect.value = 'empresarial';
+                } else if (tituloSeccion.includes('social')) {
+                    tipoEventoSelect.value = 'social';
+                }
+                
+                // Pre-llenar el mensaje con la información del paquete
+                const mensajeTextarea = document.getElementById('mensaje');
+                mensajeTextarea.value = `Estoy interesado en el ${titulo} (${precio}). Por favor, envíenme más información.`;
+                
+                // Mostrar un mensaje de ayuda
+                Swal.fire({
+                    title: 'Solicitar Cotización',
+                    text: `Completa el formulario para solicitar una cotización personalizada para el ${titulo}`,
+                    icon: 'info',
+                    confirmButtonText: 'Entendido'
+                });
+            });
+        });
     }
 } 

@@ -1001,4 +1001,108 @@ footer hr {
 #cliente-info i {
     margin-right: 10px;
     font-size: 1.2rem;
+}
+
+/* Estilos específicos para la página de eventos */
+.animate-fadeIn {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.categoria-eventos {
+    margin-bottom: 50px;
+}
+
+.categoria-eventos h3 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e74c3c;
+}
+
+.formulario-cotizacion {
+    background-color: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.formulario-cotizacion h3 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.btn-cotizar {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: 500;
+    width: 100%;
+}
+
+.btn-cotizar:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Estilos para los paquetes de eventos */
+.evento {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.evento:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.evento img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.evento .card-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.evento h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.evento p {
+    color: #666;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.evento .precio {
+    font-weight: 700;
+    color: #e74c3c;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.evento button {
+    margin-top: auto;
 } 
