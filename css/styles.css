@@ -651,9 +651,16 @@ main {
 }
 
 .perfil-info p {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0;
     border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+.perfil-info p strong {
+    font-weight: 600;
+    color: #333;
+    min-width: 120px;
 }
 
 /* Carrito de compras */
@@ -830,4 +837,112 @@ footer hr {
 .test-user-btn:hover {
     background-color: #0c5460;
     color: #fff;
+}
+
+/* Estilos para la página de perfil */
+.perfil-info p {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+.perfil-info p strong {
+    font-weight: 600;
+    color: #333;
+    min-width: 120px;
+}
+
+.beneficios-lista {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+.beneficios-lista li {
+    padding: 8px 0;
+    position: relative;
+    padding-left: 25px;
+}
+
+.beneficios-lista li:before {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    color: #2ecc71;
+}
+
+.progress {
+    height: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #2ecc71;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+/* Estilos para las tarjetas de beneficios */
+.beneficios-cliente .card {
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.beneficios-cliente .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.beneficios-cliente .card-title {
+    color: #e74c3c;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* Estilos para la tabla de historial de pedidos */
+.historial-pedidos .table th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: 600;
+}
+
+.historial-pedidos .table td {
+    vertical-align: middle;
+}
+
+/* Estado de pedidos */
+.estado-pedido {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.estado-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.estado-en-proceso {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.estado-entregado {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.estado-cancelado {
+    background-color: #f8d7da;
+    color: #721c24;
 } 

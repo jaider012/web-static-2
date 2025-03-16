@@ -976,6 +976,8 @@ function initProfileFunctionality() {
     // Cargar datos del perfil si estamos en la página de perfil
     if (window.location.pathname.includes('perfil.html')) {
         loadProfileData();
+        loadOrderHistory();
+        updateClientProgress();
     }
     
     // Botón de editar perfil
@@ -995,23 +997,23 @@ function initProfileFunctionality() {
             Swal.fire({
                 title: 'Editar Perfil',
                 html: `
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                         <label for="edit-nombre" class="form-label">Nombre:</label>
                         <input type="text" id="edit-nombre" class="form-control" value="${currentUser.nombre}">
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                         <label for="edit-cedula" class="form-label">Cédula:</label>
                         <input type="text" id="edit-cedula" class="form-control" value="${currentUser.cedula}" disabled>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                         <label for="edit-email" class="form-label">Email:</label>
                         <input type="email" id="edit-email" class="form-control" value="${currentUser.email}">
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                         <label for="edit-telefono" class="form-label">Teléfono:</label>
                         <input type="tel" id="edit-telefono" class="form-control" value="${currentUser.telefono}">
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                         <label for="edit-direccion" class="form-label">Dirección:</label>
                         <input type="text" id="edit-direccion" class="form-control" value="${currentUser.direccion}">
                     </div>
@@ -1139,7 +1141,18 @@ function initProfileFunctionality() {
 
 // Cargar datos del perfil
 function loadProfileData() {
-    if (!currentUser) return;
+    if (!currentUser) {
+        // Redirigir a la página de login si no hay usuario logueado
+        Swal.fire({
+            title: 'Acceso denegado',
+            text: 'Debes iniciar sesión para acceder a tu perfil',
+            icon: 'warning',
+            confirmButtonText: 'Iniciar sesión'
+        }).then(() => {
+            window.location.href = 'registro.html';
+        });
+        return;
+    }
     
     // Elementos del perfil
     const nombreElement = document.getElementById('perfil-nombre');
@@ -1170,5 +1183,134 @@ function loadProfileData() {
                 break;
         }
         tipoClienteElement.textContent = tipoTexto;
+    }
+}
+
+// Cargar historial de pedidos
+function loadOrderHistory() {
+    if (!currentUser) return;
+    
+    const historialBody = document.getElementById('historial-pedidos-body');
+    const noPedidosMsg = document.getElementById('no-pedidos');
+    
+    if (!historialBody || !noPedidosMsg) return;
+    
+    // Obtener pedidos del usuario desde localStorage (si existen)
+    const pedidos = JSON.parse(localStorage.getItem('myDelightsPedidos') || '[]')
+        .filter(pedido => pedido.usuarioId === currentUser.cedula);
+    
+    if (pedidos.length === 0) {
+        // Mostrar mensaje de que no hay pedidos
+        historialBody.innerHTML = '';
+        noPedidosMsg.style.display = 'block';
+        return;
+    }
+    
+    // Ocultar mensaje de que no hay pedidos
+    noPedidosMsg.style.display = 'none';
+    
+    // Limpiar tabla
+    historialBody.innerHTML = '';
+    
+    // Agregar pedidos a la tabla
+    pedidos.forEach(pedido => {
+        const row = document.createElement('tr');
+        
+        // Formatear fecha
+        const fecha = new Date(pedido.fecha);
+        const fechaFormateada = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
+        
+        // Formatear productos
+        const productosTexto = pedido.productos
+            .map(prod => `${prod.name} x${prod.quantity}`)
+            .join(', ');
+        
+        // Formatear estado con clase de color
+        let estadoClase = '';
+        switch (pedido.estado) {
+            case 'pendiente':
+                estadoClase = 'estado-pendiente';
+                break;
+            case 'en-proceso':
+                estadoClase = 'estado-en-proceso';
+                break;
+            case 'entregado':
+                estadoClase = 'estado-entregado';
+                break;
+            case 'cancelado':
+                estadoClase = 'estado-cancelado';
+                break;
+        }
+        
+        row.innerHTML = `
+            <td>${fechaFormateada}</td>
+            <td>${productosTexto}</td>
+            <td>$${pedido.total.toLocaleString()}</td>
+            <td><span class="estado-pedido ${estadoClase}">${pedido.estado}</span></td>
+        `;
+        
+        historialBody.appendChild(row);
+    });
+}
+
+// Actualizar progreso del cliente
+function updateClientProgress() {
+    if (!currentUser) return;
+    
+    // Elementos de progreso
+    const progressNuevo = document.getElementById('progress-nuevo');
+    const progressCasual = document.getElementById('progress-casual');
+    const progressPermanente = document.getElementById('progress-permanente');
+    
+    const statusNuevo = document.getElementById('status-nuevo');
+    const statusCasual = document.getElementById('status-casual');
+    const statusPermanente = document.getElementById('status-permanente');
+    
+    if (!progressNuevo || !progressCasual || !progressPermanente) return;
+    
+    // Calcular días desde el registro
+    const fechaRegistro = new Date(currentUser.fechaRegistro);
+    const hoy = new Date();
+    const diasDesdeRegistro = Math.floor((hoy - fechaRegistro) / (1000 * 60 * 60 * 24));
+    
+    // Calcular progreso según tipo de cliente
+    switch (currentUser.tipo) {
+        case 'nuevo':
+            // Para pasar a casual se necesitan 90 días
+            const progresoNuevo = Math.min(100, (diasDesdeRegistro / 90) * 100);
+            progressNuevo.style.width = `${progresoNuevo}%`;
+            statusNuevo.textContent = `${Math.floor(progresoNuevo)}% completado`;
+            
+            // Resetear los otros
+            progressCasual.style.width = '0%';
+            progressPermanente.style.width = '0%';
+            statusCasual.textContent = 'Nivel no alcanzado';
+            statusPermanente.textContent = 'Nivel no alcanzado';
+            break;
+            
+        case 'casual':
+            // Ya completó el nivel nuevo
+            progressNuevo.style.width = '100%';
+            statusNuevo.textContent = '¡Nivel completado!';
+            
+            // Para pasar a permanente se necesitan 180 días desde el registro
+            const progresoCasual = Math.min(100, ((diasDesdeRegistro - 90) / 90) * 100);
+            progressCasual.style.width = `${progresoCasual}%`;
+            statusCasual.textContent = `${Math.floor(progresoCasual)}% completado`;
+            
+            // Resetear permanente
+            progressPermanente.style.width = '0%';
+            statusPermanente.textContent = 'Nivel no alcanzado';
+            break;
+            
+        case 'permanente':
+            // Ya completó todos los niveles
+            progressNuevo.style.width = '100%';
+            progressCasual.style.width = '100%';
+            progressPermanente.style.width = '100%';
+            statusNuevo.textContent = '¡Nivel completado!';
+            statusCasual.textContent = '¡Nivel completado!';
+            statusPermanente.textContent = '¡Nivel máximo alcanzado!';
+            break;
     }
 } 

@@ -4,26 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de Usuario - My Delights</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <!-- Navbar mejorado para todas las páginas -->
+    <!-- Cabecera del sitio -->
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <nav class="navbar">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
                     <img src="images/logo.png" alt="My Delights" height="50" />
-                  </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                </a>
+                <button class="navbar-toggler" type="button" id="navbar-toggler">
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+                <div class="navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.html">Inicio</a>
+                            <a class="nav-link" href="index.html">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="menu-carta.html">Menú a la Carta</a>
@@ -38,12 +40,12 @@
                             <a class="nav-link" href="registro.html">Registro/Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="perfil.html">Mi Perfil</a>
+                            <a class="nav-link active" href="perfil.html">Mi Perfil</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="carrito.html">
                                 <i class="fas fa-shopping-cart"></i> 
-                                <span id="cart-count" class="badge bg-danger">0</span>
+                                <span id="cart-count" class="badge">0</span>
                             </a>
                         </li>
                     </ul>
@@ -52,55 +54,146 @@
         </nav>
     </header>
 
-
     <main>
-        <h2>Perfil de Usuario</h2>
-        
-        <!-- Datos personales -->
-        <section class="datos-personales">
-            <h3>Datos Personales</h3>
-            <div class="perfil-info">
-                <p><strong>Nombre:</strong> <span id="perfil-nombre">Juan Pérez</span></p>
-                <p><strong>Cédula:</strong> <span id="perfil-cedula">1234567890</span></p>
-                <p><strong>Email:</strong> <span id="perfil-email">juan@example.com</span></p>
-                <p><strong>Teléfono:</strong> <span id="perfil-telefono">123-456-7890</span></p>
-                <p><strong>Dirección:</strong> <span id="perfil-direccion">Calle Principal #123</span></p>
-                <p><strong>Tipo de Cliente:</strong> <span id="perfil-tipo">Cliente Casual</span></p>
+        <div class="container">
+            <h2 class="text-center mb-5">Perfil de Usuario</h2>
+            
+            <div class="row">
+                <!-- Datos personales -->
+                <div class="col-6">
+                    <section class="datos-personales">
+                        <h3 class="mb-4">Datos Personales</h3>
+                        <div class="perfil-info">
+                            <p><strong>Nombre:</strong> <span id="perfil-nombre">Cargando...</span></p>
+                            <p><strong>Cédula:</strong> <span id="perfil-cedula">Cargando...</span></p>
+                            <p><strong>Email:</strong> <span id="perfil-email">Cargando...</span></p>
+                            <p><strong>Teléfono:</strong> <span id="perfil-telefono">Cargando...</span></p>
+                            <p><strong>Dirección:</strong> <span id="perfil-direccion">Cargando...</span></p>
+                            <p><strong>Tipo de Cliente:</strong> <span id="perfil-tipo-cliente">Cargando...</span></p>
+                        </div>
+                        <div class="d-flex">
+                            <button id="btn-editar-perfil" class="btn btn-secondary mr-3">Editar Datos</button>
+                            <button id="btn-eliminar-cuenta" class="btn btn-danger">Eliminar Cuenta</button>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Historial de pedidos -->
+                <div class="col-6">
+                    <section class="historial-pedidos">
+                        <h3 class="mb-4">Historial de Pedidos</h3>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Productos</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historial-pedidos-body">
+                                    <!-- Los pedidos se cargarán dinámicamente con JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="no-pedidos" class="alert alert-info text-center">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Aún no has realizado ningún pedido.
+                        </div>
+                    </section>
+                </div>
             </div>
-            <button id="btn-editar-perfil" class="btn-editar">Editar Datos</button>
-            <button id="btn-eliminar-cuenta" class="btn-eliminar">Eliminar Cuenta</button>
-        </section>
-
-        <!-- Historial de pedidos -->
-        <section class="historial-pedidos">
-            <h3>Historial de Pedidos</h3>
-            <table class="tabla-pedidos">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Productos</th>
-                        <th>Total</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Ejemplo de un pedido -->
-                    <tr>
-                        <td>01/01/2023</td>
-                        <td>Plato Especial x2, Postre x1</td>
-                        <td>$62.000</td>
-                        <td>Entregado</td>
-                    </tr>
-                    <!-- Puedes agregar más pedidos aquí -->
-                </tbody>
-            </table>
-        </section>
+            
+            <!-- Sección de beneficios según tipo de cliente -->
+            <section class="beneficios-cliente mt-5">
+                <h3 class="mb-4">Beneficios de Cliente</h3>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">Cliente Nuevo</h4>
+                                <ul class="beneficios-lista">
+                                    <li>2% de descuento en compras mayores a $250,000</li>
+                                    <li>Acceso a promociones especiales para nuevos clientes</li>
+                                    <li>Posibilidad de acumular puntos para ascender a Cliente Casual</li>
+                                </ul>
+                                <div class="progress mt-3">
+                                    <div class="progress-bar" id="progress-nuevo" style="width: 0%"></div>
+                                </div>
+                                <p class="text-center mt-2" id="status-nuevo">0% completado</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">Cliente Casual</h4>
+                                <ul class="beneficios-lista">
+                                    <li>2% de descuento en todas las compras</li>
+                                    <li>6% de descuento en compras mayores a $200,000</li>
+                                    <li>Acceso a promociones exclusivas mensuales</li>
+                                    <li>Posibilidad de acumular puntos para ascender a Cliente Permanente</li>
+                                </ul>
+                                <div class="progress mt-3">
+                                    <div class="progress-bar" id="progress-casual" style="width: 0%"></div>
+                                </div>
+                                <p class="text-center mt-2" id="status-casual">0% completado</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">Cliente Permanente</h4>
+                                <ul class="beneficios-lista">
+                                    <li>4% de descuento en todas las compras</li>
+                                    <li>10% de descuento en compras mayores a $150,000</li>
+                                    <li>Acceso a promociones exclusivas semanales</li>
+                                    <li>Opción de crédito para compras</li>
+                                    <li>Invitaciones a eventos especiales</li>
+                                </ul>
+                                <div class="progress mt-3">
+                                    <div class="progress-bar" id="progress-permanente" style="width: 0%"></div>
+                                </div>
+                                <p class="text-center mt-2" id="status-permanente">¡Nivel máximo alcanzado!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
-    <!-- Pie de página -->
-    <footer>
-        <p>My Delights &copy; 2023 - Todos los derechos reservados</p>
-        <p>Contacto: info@mydelights.com | Tel: 123-456-7890</p>
+    <footer class="bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 mb-3">
+                    <h5>My Delights</h5>
+                    <p>Ofreciendo la mejor experiencia gastronómica desde 2010.</p>
+                </div>
+                <div class="col-4 mb-3">
+                    <h5>Contacto</h5>
+                    <address>
+                        <p><i class="fas fa-map-marker-alt mr-2"></i> Calle Principal #123, Ciudad</p>
+                        <p><i class="fas fa-phone mr-2"></i> (123) 456-7890</p>
+                        <p><i class="fas fa-envelope mr-2"></i> info@mydelights.com</p>
+                    </address>
+                </div>
+                <div class="col-4 mb-3">
+                    <h5>Síguenos</h5>
+                    <div class="social-icons">
+                        <a href="#" class="text-white mr-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white mr-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white mr-2"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2023 My Delights. Todos los derechos reservados.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="js/scripts.js"></script>
