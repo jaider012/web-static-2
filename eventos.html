@@ -25,52 +25,44 @@
   <body>
     <!-- Navbar mejorado para todas las páginas -->
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container">
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link active" href="index.html">Inicio</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="menu-carta.html">Menú a la Carta</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="menu-corriente.html"
-                  >Comida Corriente</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="eventos.html">Eventos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="registro.html">Registro/Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="perfil.html">Mi Perfil</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="carrito.html">
-                  <i class="fas fa-shopping-cart"></i>
-                  <span id="cart-count" class="badge bg-danger">0</span>
-                </a>
-              </li>
-            </ul>
+      <nav class="navbar">
+          <div class="container">
+              <button class="navbar-toggler" type="button" id="navbar-toggler">
+                  <span class="navbar-toggler-icon"></span>
+                  <span class="navbar-toggler-icon"></span>
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                      <li class="nav-item">
+                          <a class="nav-link" href="index.html">Inicio</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link active" href="menu-carta.html">Menú a la Carta</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="menu-corriente.html">Comida Corriente</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="eventos.html">Eventos</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="registro.html">Registro/Login</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="perfil.html">Mi Perfil</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="carrito.html">
+                              <i class="fas fa-shopping-cart"></i> 
+                              <span id="cart-count" class="badge">0</span>
+                          </a>
+                      </li>
+                  </ul>
+              </div>
           </div>
-        </div>
       </nav>
-    </header>
+  </header>
 
     <main class="container mt-5 pt-5">
       <h2 class="text-center mb-5 animate__animated animate__fadeInDown">
