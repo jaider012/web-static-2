@@ -15,7 +15,8 @@ Este proyecto es una aplicación web completa para el restaurante My Delights, d
 
 La aplicación utiliza una base de datos MySQL con la siguiente estructura:
 
-![Estructura de la Base de Datos](Documentacion/db_structure.png)
+![Estructura de la Base de Datos](https://github.com/user-attachments/assets/622b154c-731e-420f-b643-40a4966b1b44)
+
 
 ### Tablas Principales:
 
