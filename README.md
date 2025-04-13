@@ -58,3 +58,15 @@ Si ya tienes Git instalado en tu computadora, puedes clonar este repositorio:
 Si tienes problemas para acceder al sitio o tienes preguntas, contáctame:
 - Email: jaiderandres901@hotmail.com
 - Teléfono: 3023902452
+
+## Configuración del Entorno de Desarrollo
+
+Para información detallada sobre cómo configurar el entorno de desarrollo y trabajar con este proyecto, consulta el archivo [Documentacion/configuracion_desarrollo.md](Documentacion/configuracion_desarrollo.md). Este documento incluye:
+
+- Instalación y configuración de MAMP
+- Estructura del proyecto
+- Configuración de la base de datos
+- Guía de desarrollo local
+- Buenas prácticas implementadas
+- Consideraciones de seguridad
+- Solución de problemas comunes
