@@ -124,7 +124,3 @@ Para información más detallada sobre la configuración y desarrollo, consulta:
 Para soporte técnico o consultas:
 - 📧 Email: jaiderandres901@hotmail.com
 - 📱 Teléfono: 3023902452
-
-## Licencia
-
-Este proyecto está bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
