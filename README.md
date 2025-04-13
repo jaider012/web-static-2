@@ -1,72 +1,129 @@
-# Restaurante My Delights - Sitio Web Estático
+# Restaurante My Delights
 
-Este repositorio contiene el sitio web estático para el restaurante My Delights, desarrollado como parte del curso "Desarrollo de Aplicaciones para la Web" de la UNAD.
+Este proyecto es una aplicación web completa para el restaurante My Delights, desarrollada como parte del curso "Desarrollo de Aplicaciones para la Web" de la UNAD. La aplicación permite a los usuarios ver el menú, realizar pedidos, gestionar eventos y mantener un perfil personalizado.
 
-## ¿Cómo usar este sitio web? (Para usuarios sin experiencia técnica)
+## Características Principales
 
-### Opción 1: Ver el sitio web directamente en tu computadora
+- 🍽️ Menú digital completo con imágenes
+- 🛒 Sistema de carrito de compras
+- 👤 Registro y autenticación de usuarios
+- 🎉 Gestión de eventos y banquetes
+- 💰 Sistema de descuentos y puntos
+- 📱 Diseño responsive
 
-1. **Descargar los archivos:**
-   - Haz clic en el botón verde "Code" en la parte superior de esta página
-   - Selecciona "Download ZIP" del menú desplegable
-   - Esto descargará todos los archivos como un paquete comprimido a tu computadora
+## Estructura de la Base de Datos
 
-2. **Descomprimir los archivos:**
-   - Encuentra el archivo ZIP descargado en tu carpeta de Descargas
-   - Haz clic derecho sobre él y selecciona "Extraer todos..." (Windows) o simplemente haz doble clic (Mac)
-   - Elige una ubicación para guardar los archivos extraídos
+La aplicación utiliza una base de datos MySQL con la siguiente estructura:
 
-3. **Abrir el sitio web:**
-   - Navega a la carpeta donde extrajiste los archivos
-   - Busca el archivo llamado `index.html`
-   - Haz doble clic en este archivo
-   - El sitio web se abrirá automáticamente en tu navegador predeterminado
+![Estructura de la Base de Datos](Documentacion/db_structure.png)
 
-### Opción 2: Vista previa en GitHub (más limitada)
+### Tablas Principales:
 
-Si solo quieres echar un vistazo rápido al código sin descargar nada:
+1. **clients**
+   - Gestión de usuarios y clientes
+   - Sistema de puntos y tipos de cliente
+   - Información personal y de contacto
 
-1. Navega por las carpetas en GitHub haciendo clic en sus nombres
-2. Haz clic en cualquier archivo para ver su contenido
-3. Los archivos HTML se mostrarán como código, no como páginas web renderizadas
+2. **menu_items**
+   - Productos disponibles
+   - Precios y descripciones
+   - Categorización de productos
 
-### Opción 3: Para usuarios que tienen Git instalado
+3. **orders**
+   - Pedidos de clientes
+   - Estado y seguimiento
+   - Información de entrega
 
-Si ya tienes Git instalado en tu computadora, puedes clonar este repositorio:
+4. **events**
+   - Gestión de eventos especiales
+   - Reservas y cotizaciones
+   - Precios base y disponibilidad
 
-1. Abre tu terminal o línea de comandos
-2. Ejecuta el siguiente comando:
+5. **categories**
+   - Clasificación de productos
+   - Organización del menú
 
-{{git clone https://github.com/jaider012/web-static-2.git
-}}
+## Tecnologías Utilizadas
 
-## Funcionalidades
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Backend**: PHP
+- **Base de Datos**: MySQL
+- **Servidor**: Apache (MAMP)
 
-- Visualización del menú completo del restaurante con imágenes
-- Información sobre servicios de banquetes y eventos
-- Registro de usuarios y sistema de descuentos
-- Carrito de compras para pedidos en línea
+## Requisitos de Instalación
 
-## Notas importantes
+1. MAMP (versión 6.x o superior)
+2. PHP 7.4 o superior
+3. MySQL 5.7 o superior
+4. Navegador web moderno
 
-- Este es un sitio web estático, lo que significa que algunas funcionalidades (como el envío de formularios) son solo demostrativas
-- No se requiere ninguna instalación de software adicional para ver el sitio
-- El sitio funciona mejor en navegadores modernos como Chrome, Firefox, Edge o Safari
+## Configuración del Proyecto
 
-## Contacto
+### 1. Clonar el Repositorio
 
-Si tienes problemas para acceder al sitio o tienes preguntas, contáctame:
-- Email: jaiderandres901@hotmail.com
-- Teléfono: 3023902452
+```bash
+git clone https://github.com/jaider012/web-static-2.git
+cd web-static-2
+```
 
-## Configuración del Entorno de Desarrollo
+### 2. Configurar Base de Datos
 
-Para información detallada sobre cómo configurar el entorno de desarrollo y trabajar con este proyecto, consulta el archivo [Documentacion/configuracion_desarrollo.md](Documentacion/configuracion_desarrollo.md). Este documento incluye:
+1. Acceder a phpMyAdmin (http://localhost:8888/phpMyAdmin)
+2. Crear una nueva base de datos llamada 'mydelights'
+3. Importar el archivo `Database/mydelights.sql`
 
-- Instalación y configuración de MAMP
-- Estructura del proyecto
-- Configuración de la base de datos
-- Guía de desarrollo local
-- Buenas prácticas implementadas
-- Consideraciones de seguridad
-- Solución de problemas comunes
+### 3. Configurar MAMP
+
+1. Copiar el proyecto a la carpeta htdocs de MAMP
+2. Configurar los puertos:
+   - Apache: 8888
+   - MySQL: 8889
+3. Iniciar los servidores
+
+## Estructura del Proyecto
+
+```
+Project Root/
+├── includes/          # Componentes PHP
+│   ├── auth.php      # Autenticación
+│   ├── header.php    # Encabezado común
+│   ├── footer.php    # Pie de página
+│   ├── menu.php      # Navegación
+│   └── cart.php      # Carrito de compras
+├── Database/         # Archivos de base de datos
+├── css/             # Estilos
+├── js/              # JavaScript
+├── Documentacion/   # Documentación
+└── config/          # Configuración
+```
+
+## Documentación Adicional
+
+Para información más detallada sobre la configuración y desarrollo, consulta:
+- [Configuración del Entorno](Documentacion/configuracion_desarrollo.md)
+- [Manual de Usuario](Documentacion/manual_usuario.md)
+
+## Seguridad
+
+- Validación de entrada de usuarios
+- Prevención de SQL Injection
+- Manejo seguro de sesiones
+- Protección contra XSS
+- Encriptación de contraseñas
+
+## Mantenimiento
+
+- Respaldos automáticos de la base de datos
+- Logs de errores
+- Monitoreo de rendimiento
+- Actualizaciones de seguridad
+
+## Contacto y Soporte
+
+Para soporte técnico o consultas:
+- 📧 Email: jaiderandres901@hotmail.com
+- 📱 Teléfono: 3023902452
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
