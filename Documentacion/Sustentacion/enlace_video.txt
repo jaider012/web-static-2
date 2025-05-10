@@ -1,0 +1,11 @@
+# Enlace al Video de Sustentación SEO My Delights
+
+# Instrucciones: 
+# 1. Reemplaza la siguiente URL con el enlace a tu video de sustentación
+# 2. Asegúrate de que el enlace sea público o no listado (no privado)
+# 3. Verifica que se pueda acceder sin necesidad de iniciar sesión
+
+URL_VIDEO: https://www.youtube.com/watch?v=tu_id_de_video
+
+# Fecha de subida: DD/MM/AAAA
+# Nombre del estudiante: Tu Nombre Completo 

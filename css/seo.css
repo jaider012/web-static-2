@@ -1,0 +1,180 @@
+/* SEO.css - Estilos para mejorar SEO y accesibilidad */
+
+/* Estilos para enlaces del footer */
+.footer-links {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover, 
+.footer-links a:focus {
+    color: #f8d654;
+    text-decoration: underline;
+}
+
+/* Enlaces en línea en el footer */
+.footer-links-inline {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+}
+
+.footer-links-inline li {
+    margin-left: 15px;
+}
+
+.footer-links-inline a {
+    color: #f8f9fa;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-links-inline a:hover,
+.footer-links-inline a:focus {
+    color: #f8d654;
+    text-decoration: underline;
+}
+
+/* Mejora para enfoque en elementos interactivos */
+a:focus, button:focus, input:focus, textarea:focus, select:focus {
+    outline: 2px solid #f8d654;
+    outline-offset: 2px;
+}
+
+/* Ratio de contraste mejorado para textos */
+.text-content {
+    color: #333333;
+    line-height: 1.6;
+}
+
+/* WhatsApp flotante */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.whatsapp-float:hover,
+.whatsapp-float:focus {
+    color: #FFF;
+    background-color: #1ea952;
+    transform: scale(1.1);
+}
+
+/* Mejoras para accesibilidad en elementos de navegación */
+.nav-link:focus {
+    outline: 2px solid #f8d654;
+    outline-offset: -2px;
+}
+
+/* Skip to main content - accesibilidad */
+.skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 999;
+}
+
+.skip-to-content:focus {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    padding: 10px 15px;
+    background: #f8d654;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Mejora para imágenes responsivas */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Estructura para breadcrumbs */
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+
+.breadcrumb-item + .breadcrumb-item {
+    padding-left: 0.5rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    display: inline-block;
+    padding-right: 0.5rem;
+    color: #6c757d;
+    content: "/";
+}
+
+.breadcrumb-item.active {
+    color: #6c757d;
+}
+
+/* Estilos para tablas responsivas */
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Estilos para secciones con schema.org */
+[itemscope] {
+    display: block;
+}
+
+/* Mejoras para responsive */
+@media (max-width: 768px) {
+    .footer-links-inline {
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    .col-md-6.text-md-end {
+        text-align: center !important;
+    }
+    
+    .col-md-6 p {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+} 
