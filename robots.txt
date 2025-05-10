@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /carrito.php
+Disallow: /perfil.php
+Disallow: /cotizaciones.php
+Disallow: /checkout.php
+
+Sitemap: https://mydelights.com/sitemap.xml 
